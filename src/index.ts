@@ -32,14 +32,14 @@ export interface UatChecklistOptions {
   collapsed?: boolean;
 }
 
-const DEFAULT_FILENAMES = [
+export const DEFAULT_FILENAMES = [
   'uat-checklist.yaml',
   'uat-checklist.yml',
   'uat-checklist.json',
   'uat-checklist.md',
 ];
 
-function resolveChecklistPath(root: string, explicit?: string): string | null {
+export function resolveChecklistPath(root: string, explicit?: string): string | null {
   if (explicit) {
     const abs = path.resolve(root, explicit);
     return fs.existsSync(abs) ? abs : null;
@@ -51,7 +51,7 @@ function resolveChecklistPath(root: string, explicit?: string): string | null {
   return null;
 }
 
-function parseMarkdownChecklist(content: string): UatChecklist {
+export function parseMarkdownChecklist(content: string): UatChecklist {
   const lines = content.split('\n');
   const sections: UatChecklistSection[] = [];
   let current: UatChecklistSection | null = null;
@@ -119,7 +119,7 @@ function parseMarkdownChecklist(content: string): UatChecklist {
   return { title, sections };
 }
 
-function parseChecklistFile(filePath: string): UatChecklist {
+export function parseChecklistFile(filePath: string): UatChecklist {
   const content = fs.readFileSync(filePath, 'utf-8');
   const ext = path.extname(filePath).toLowerCase();
 
@@ -217,5 +217,3 @@ export function uatChecklist(options: UatChecklistOptions = {}): Plugin {
     },
   };
 }
-
-export default uatChecklist;

@@ -11,5 +11,6 @@
     "rootDir": "src",
     "lib": ["ES2020"]
   },
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts"],
+  "exclude": ["src/__tests__/**"]
 }

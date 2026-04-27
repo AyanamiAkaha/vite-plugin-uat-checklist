@@ -322,6 +322,13 @@ export function getOverlayHtml(opts: OverlayOptions): string {
 
   shadow.appendChild(style);
 
+  // --- HTML escaping ---
+  function esc(str) {
+    const d = document.createElement('div');
+    d.appendChild(document.createTextNode(str));
+    return d.innerHTML;
+  }
+
   // --- State ---
   let checklist = null;
   let isCollapsed = START_COLLAPSED;
@@ -402,8 +409,8 @@ export function getOverlayHtml(opts: OverlayOptions): string {
     const header = document.createElement('div');
     header.className = 'uat-header';
     header.innerHTML = \`
-      <div class="uat-title">\${checklist.title || 'UAT Checklist'}</div>
-      \${checklist.release ? '<div class="uat-release">v' + checklist.release + '</div>' : ''}
+      <div class="uat-title">\${esc(checklist.title || 'UAT Checklist')}</div>
+      \${checklist.release ? '<div class="uat-release">v' + esc(checklist.release) + '</div>' : ''}
       <div class="uat-progress-bar"><div class="uat-progress-fill" style="width:\${pct}%"></div></div>
       <div class="uat-progress-text">\${totalChecked}/\${totalItems} completed · \${pct}%</div>
     \`;
@@ -424,7 +431,7 @@ export function getOverlayHtml(opts: OverlayOptions): string {
       secHeader.className = 'uat-section-header';
       secHeader.innerHTML = \`
         <span class="uat-section-arrow">▶</span>
-        <span class="uat-section-name">\${section.name}</span>
+        <span class="uat-section-name">\${esc(section.name)}</span>
         <span class="uat-section-count">\${sectionChecked}/\${section.items.length}</span>
       \`;
       secHeader.onclick = () => sec.classList.toggle('open');
@@ -442,18 +449,18 @@ export function getOverlayHtml(opts: OverlayOptions): string {
 
         let routeHtml = '';
         if (item.route) {
-          routeHtml = '<a class="uat-item-route" href="' + item.route + '">→ ' + item.route + '</a>';
+          routeHtml = '<a class="uat-item-route" href="' + esc(item.route) + '">\u2192 ' + esc(item.route) + '</a>';
         }
 
         let notesHtml = '';
         if (item.notes) {
-          notesHtml = '<div class="uat-item-notes">' + item.notes + '</div>';
+          notesHtml = '<div class="uat-item-notes">' + esc(item.notes) + '</div>';
         }
 
         el.innerHTML = \`
           <div class="uat-checkbox"><span class="uat-checkmark">✓</span></div>
           <div class="uat-item-content">
-            <div class="uat-item-text">\${item.text}</div>
+            <div class="uat-item-text">\${esc(item.text)}</div>
             \${routeHtml}
             \${notesHtml}
           </div>
