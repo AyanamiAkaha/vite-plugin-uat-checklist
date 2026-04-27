@@ -1,6 +1,6 @@
 {
   "name": "@frater260/vite-plugin-uat-checklist",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Vite plugin that overlays a UAT checklist panel in dev mode",
   "type": "module",
   "main": "dist/index.cjs",
@@ -29,7 +29,7 @@
     "prepublishOnly": "npm run build"
   },
   "peerDependencies": {
-    "vite": "^5.0.0 || ^6.0.0"
+    "vite": "^5.0.0 || ^6.0.0 || ^7.0.0"
   },
   "devDependencies": {
     "@vitest/coverage-v8": "^4.1.5",
