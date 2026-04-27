@@ -1,0 +1,44 @@
+{
+  "name": "@frater260/vite-plugin-uat-checklist",
+  "version": "0.1.0",
+  "description": "Vite plugin that overlays a UAT checklist panel in dev mode",
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts --clean",
+    "dev": "tsup src/index.ts --format esm,cjs --dts --watch",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "vite": "^5.0.0 || ^6.0.0"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.0",
+    "typescript": "^5.3.0",
+    "vite": "^6.0.0"
+  },
+  "dependencies": {
+    "yaml": "^2.3.0"
+  },
+  "keywords": [
+    "vite",
+    "vite-plugin",
+    "uat",
+    "checklist",
+    "testing",
+    "qa"
+  ],
+  "license": "MIT"
+}

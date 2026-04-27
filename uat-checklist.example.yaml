@@ -1,0 +1,44 @@
+# Example UAT checklist — copy to your project root as uat-checklist.yaml
+
+release: "1.0.0"
+title: "My App UAT"
+
+sections:
+  - name: Authentication
+    items:
+      - text: Login with valid credentials redirects to dashboard
+        route: /login
+      - text: Invalid credentials show error message
+        route: /login
+        notes: Check both wrong email and wrong password
+      - text: Password reset sends email
+        route: /forgot-password
+      - text: Logout clears session and redirects to login
+        route: /dashboard
+
+  - name: Dashboard
+    items:
+      - text: Charts render without console errors
+        route: /dashboard
+      - text: Data loads within 2 seconds
+        route: /dashboard
+      - text: Empty state shown when no data available
+        route: /dashboard
+
+  - name: User Management
+    items:
+      - text: Can create new user with all required fields
+        route: /admin/users/new
+      - text: User list pagination works correctly
+        route: /admin/users
+      - text: Can edit existing user details
+        route: /admin/users
+      - text: Delete user shows confirmation dialog
+        route: /admin/users
+        notes: Verify cascade behavior for user's owned resources
+
+  - name: API & Error Handling
+    items:
+      - text: 404 page renders for unknown routes
+      - text: API timeout shows user-friendly message
+      - text: Network offline banner appears when disconnected
