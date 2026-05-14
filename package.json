@@ -1,6 +1,6 @@
 {
   "name": "@frater260/vite-plugin-uat-checklist",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Vite plugin that overlays a UAT checklist panel in dev mode",
   "type": "module",
   "main": "dist/index.cjs",

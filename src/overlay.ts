@@ -467,10 +467,17 @@ export function getOverlayHtml(opts: OverlayOptions): string {
         \`;
 
         el.onclick = (e) => {
-          if (e.target.closest('.uat-item-route')) return; // let link navigate
+          if (e.target.closest('.uat-item-route')) return;
           checked[key] = !checked[key];
           saveCheckedState(checked);
-          render();
+          el.classList.toggle('checked', checked[key]);
+          const secCount = section.items.filter((_, jj) => checked[si + ':' + jj]).length;
+          secHeader.querySelector('.uat-section-count').textContent = secCount + '/' + section.items.length;
+          let nc = 0;
+          checklist.sections.forEach((s, ssi) => s.items.forEach((_, ii) => { if (checked[ssi + ':' + ii]) nc++; }));
+          const np = totalItems > 0 ? Math.round((nc / totalItems) * 100) : 0;
+          header.querySelector('.uat-progress-fill').style.width = np + '%';
+          header.querySelector('.uat-progress-text').textContent = nc + '/' + totalItems + ' completed \xB7 ' + np + '%';
         };
 
         itemsDiv.appendChild(el);
