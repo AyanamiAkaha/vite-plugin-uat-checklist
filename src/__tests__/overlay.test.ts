@@ -37,6 +37,15 @@ describe('getOverlayHtml', () => {
     expect(html).toContain('uat-checklist:');
   });
 
+  it('persists the collapse choice across reloads, seeded from the option', () => {
+    const html = getOverlayHtml({ position: 'right', width: 360, collapsed: false });
+    // read: a stored value wins, otherwise START_COLLAPSED seeds the state
+    expect(html).toContain("localStorage.getItem(COLLAPSED_KEY)");
+    expect(html).toContain('return raw === null ? START_COLLAPSED : raw === \'1\'');
+    // write: the toggle records the new state
+    expect(html).toContain("localStorage.setItem(COLLAPSED_KEY, isCollapsed ? '1' : '0')");
+  });
+
   it('includes HMR listener', () => {
     const html = getOverlayHtml({ position: 'right', width: 360, collapsed: false });
     expect(html).toContain('import.meta.hot');

@@ -331,7 +331,17 @@ export function getOverlayHtml(opts: OverlayOptions): string {
 
   // --- State ---
   let checklist = null;
-  let isCollapsed = START_COLLAPSED;
+  // The panel overlays page content (it is a dev tool), so a user who
+  // collapses it must not get it re-expanded over their app on every full
+  // page load — the choice persists, seeded from the collapsed option.
+  const COLLAPSED_KEY = STORAGE_PREFIX + 'collapsed';
+  function loadCollapsedState() {
+    try {
+      const raw = localStorage.getItem(COLLAPSED_KEY);
+      return raw === null ? START_COLLAPSED : raw === '1';
+    } catch { return START_COLLAPSED; }
+  }
+  let isCollapsed = loadCollapsedState();
 
   function storageKey() {
     const rel = checklist?.release || 'default';
@@ -366,6 +376,7 @@ export function getOverlayHtml(opts: OverlayOptions): string {
     toggle.onclick = () => {
       isCollapsed = !isCollapsed;
       panel.classList.toggle('collapsed', isCollapsed);
+      try { localStorage.setItem(COLLAPSED_KEY, isCollapsed ? '1' : '0'); } catch {}
     };
     shadow.appendChild(toggle);
 
