@@ -36,11 +36,18 @@ export default defineConfig({
       checklist: './uat-checklist.yaml', // auto-detected if omitted
       position: 'right',                // 'left' | 'right'
       width: 360,                       // panel width in px
-      collapsed: false,                 // start collapsed
+      collapsed: false,                 // initial state, used until the user toggles
     }),
   ],
 })
 ```
+
+### Panel state
+
+The panel is a fixed overlay and can cover page content while expanded. The
+collapse/expand choice (☰ button) is remembered in `localStorage`
+(`uat-checklist:collapsed`) and survives reloads — the `collapsed` option only
+seeds the very first visit.
 
 ### 2. Create a checklist file in your project root
 
